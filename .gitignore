@@ -1,6 +1,7 @@
 # Builds
 #
 bin/
+build/
 
 # CMake
 # https://github.com/github/gitignore/blob/master/CMake.gitignore
