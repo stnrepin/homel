@@ -1,0 +1,30 @@
+dist: xenial
+sudo: required
+
+language: c
+
+os:
+    - linux
+    - osx
+    - windows
+
+compiler:
+    - gcc
+    - clang
+
+env:
+    - TARGET_CPU=amd64 BUILD_CONFIGURATION=Debug
+    - TARGET_CPU=amd64 BUILD_CONFIGURATION=Release
+
+matrix:
+    exclude:
+        - os: osx
+          compiler: gcc
+
+script:
+    - mkdir build
+    - cd build
+    - cmake -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION -DTARGET_CPU=$TARGET_CPU ..
+    - cmake --build .
+    # TODO: Add tests later.
+

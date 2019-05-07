@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.13)
+cmake_minimum_required(VERSION 3.10)
 
 file(GLOB_RECURSE source_files RELATIVE ${CMAKE_CURRENT_LIST_DIR} *.c)
 
