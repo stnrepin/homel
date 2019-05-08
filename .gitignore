@@ -30,3 +30,5 @@ _deps
 #
 tags
 
+# Vim
+.ycm_extra_conf.py
