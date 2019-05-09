@@ -2,8 +2,16 @@ cmake_minimum_required(VERSION 3.10)
 
 project(homel LANGUAGES C)
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../bin)
+add_subdirectory("src")
+set_target_properties(homel
+    PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin"
+)
 
-include_directories(include)
-add_subdirectory(src)
+if(BUILD_TEST)
+    enable_testing()
+
+    add_subdirectory("external/Unity")
+    add_subdirectory("test")
+endif()
 

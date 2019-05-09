@@ -26,5 +26,5 @@ script:
     - cd build
     - cmake -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION -DTARGET_CPU=$TARGET_CPU ..
     - cmake --build .
-    # TODO: Add tests later.
+    - ctest --output-on-failure
 
