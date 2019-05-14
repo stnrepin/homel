@@ -20,11 +20,24 @@ matrix:
     exclude:
         - os: osx
           compiler: gcc
+        - os: windows
+          compiler: clang
+
+install:
+    - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
+    - mkdir -p ${DEPS_DIR} && cd ${DEPS_DIR}
+    - source "${TRAVIS_BUILD_DIR}/ci/travis/install-${TRAVIS_OS_NAME}.sh"
+    - cd "${TRAVIS_BUILD_DIR}"
 
 script:
     - mkdir build
     - cd build
-    - cmake -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION -DTARGET_CPU=$TARGET_CPU ..
+    - if [ "$TRAVIS_OS_NAME" == "windows" ]; then
+          GENERATOR="MinGW Makefiles";
+      else
+          GENERATOR="Unix Makefiles";
+      fi
+    - cmake -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION -DTARGET_CPU=$TARGET_CPU -DBUILD_TEST=1 -G "$GENERATOR" ..
     - cmake --build .
-    - ctest --output-on-failure
+    - ctest -V
 
