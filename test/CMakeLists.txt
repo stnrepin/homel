@@ -13,3 +13,5 @@ target_include_directories(homel_test_lib
 )
 target_link_libraries(homel_test_lib unity)
 
+add_subdirectory("file")
+
