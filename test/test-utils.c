@@ -12,7 +12,7 @@ void **build_arr(int n, ...) {
         return NULL;
     }
 
-    arr = malloc(n);
+    arr = malloc(n * sizeof(void *));
 
     va_start(vl, n);
     for (i = 0; i < n; i++) {
