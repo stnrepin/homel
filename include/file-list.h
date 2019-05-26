@@ -9,7 +9,7 @@
  */
 typedef struct _FileListItem {
     File *file;
-    _FileListItem *next;
+    struct _FileListItem *next;
 } FileListItem;
 
 /**
