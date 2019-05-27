@@ -7,7 +7,7 @@
  * Объект, представляющий TagPath.
  */
 typedef struct {
-    size_t count;
+    int count;
     char **tags;
 } TagPath;
 
@@ -17,7 +17,7 @@ typedef struct {
 typedef struct {
     size_t id;
     TagPath **tpathes;
-    size_t tps_count;
+    int tps_count;
     char *rel_path;
 } File;
 
@@ -35,7 +35,7 @@ TagPath *TagPath_new();
  * @param count Число строк в массиве.
  * @return TagPath Новый объект.
  */
-TagPath *TagPath_build(char **tp_arr, size_t count);
+TagPath *TagPath_build(char **tp_arr, int count);
 
 /**
  * Уничтожает объект.
@@ -68,7 +68,7 @@ File *File_new();
  * @param path Путь (относительно корня) до файла.
  * @return File Новый объект.
  */
-File *File_build(size_t id, TagPath **tps, size_t tps_count, char *path);
+File *File_build(int id, TagPath **tps, int tps_count, char *path);
 
 /**
  * Уничтожает объект.

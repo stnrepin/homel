@@ -20,8 +20,8 @@ TagPath *TagPath_new() {
     return tp;
 }
 
-TagPath *TagPath_build(char **tp_arr, size_t count) {
-    size_t i, has_error;
+TagPath *TagPath_build(char **tp_arr, int count) {
+    int i, has_error;
     TagPath *tp;
 
     has_error = 0;
@@ -50,7 +50,7 @@ TagPath *TagPath_build(char **tp_arr, size_t count) {
 }
 
 void TagPath_destroy(TagPath *tp) {
-    size_t i;
+    int i;
 
     if (tp != NULL) {
         if (tp->count > 0 && tp->tags != NULL) {
@@ -93,8 +93,8 @@ File *File_new() {
     return f;
 }
 
-File *File_build(size_t id, TagPath **tps, size_t tpathes_count, char *path) {
-    size_t i;
+File *File_build(int id, TagPath **tps, int tpathes_count, char *path) {
+    int i;
     File *f;
 
     f = File_new();
@@ -125,7 +125,7 @@ File *File_build(size_t id, TagPath **tps, size_t tpathes_count, char *path) {
 }
 
 void File_destroy(File *file) {
-    size_t i;
+    int i;
     if (file != NULL) {
         free(file->rel_path);
         if (file->tps_count > 0 && file->tpathes != NULL) {
