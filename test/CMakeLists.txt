@@ -15,4 +15,5 @@ target_link_libraries(homel_test_lib unity)
 
 add_subdirectory("file")
 add_subdirectory("menu")
+add_subdirectory("file-list")
 

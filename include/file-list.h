@@ -1,7 +1,6 @@
 #ifndef FILE_LIST_H_
 #define FILE_LIST_H_
 
-#include <stddef.h>
 #include "file.h"
 
 /**
@@ -22,30 +21,40 @@ typedef struct {
 
 /**
  * Создает новый элемент односвязного списка.
- * 
+ *
  * @return FileListItem* Новый объект.
  */
 FileListItem *FileListItem_new();
 
 /**
  * Уничтожает элемент односвязного списка.
- * 
+ *
  * @param fitem Элемент.
  */
 void FileListItem_destroy(FileListItem *fitem);
 
 /**
  * Создает новый односвязный список.
- * 
+ *
  * @return FileList* Список.
  */
 FileList *FileList_new();
 
 /**
  * Уничтожает список.
- * 
- * @param list 
+ *
+ * @param list
  */
 void FileList_destroy(FileList *list);
 
+/**
+ * Создает новый список из массива (элементы копируются).
+ *
+ * @param files Массив.
+ * @param count Количество элементов в массиве.
+ * @return Новый список.
+ */
+FileList *FileList_from_array(File **files, int count);
+
 #endif /* !FILE_LIST_H_ */
+

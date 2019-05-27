@@ -210,6 +210,31 @@ void should_return_true_on_null_files_comparison() {
     TEST_ASSERT(File_equals(NULL, NULL));
 }
 
+/*
+ * Method: File_clone
+ */
+void should_create_full_clone_of_file() {
+    File *f, *f_c;
+
+    f = create_simple_file1();
+    f_c = File_clone(f);
+
+    TEST_ASSERT_NOT_NULL(f_c);
+    TEST_ASSERT_TRUE(File_equals(f, f_c));
+}
+/*
+ * Method: File_clone
+ */
+void should_create_full_clone_of_file_without_tags() {
+    File *f, *f_c;
+
+    f = create_file_without_tags();
+    f_c = File_clone(f);
+
+    TEST_ASSERT_NOT_NULL(f_c);
+    TEST_ASSERT_TRUE(File_equals(f, f_c));
+}
+
 int main() {
     UNITY_BEGIN();
 
@@ -230,6 +255,9 @@ int main() {
     RUN_TEST(should_right_compare_file_by_ptr);
     RUN_TEST(should_return_false_on_comparison_of_file_with_null);
     RUN_TEST(should_return_true_on_null_files_comparison);
+
+    RUN_TEST(should_create_full_clone_of_file);
+    RUN_TEST(should_create_full_clone_of_file_without_tags);
 
     return UNITY_END();
 }

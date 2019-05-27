@@ -5,6 +5,7 @@
 #include <string.h>
 
 #include "app-error.h"
+#include "utils.h"
 
 TagPath *TagPath_new() {
     TagPath *tp;
@@ -136,6 +137,33 @@ void File_destroy(File *file) {
         free(file->tpathes);
     }
     free(file);
+}
+
+File *File_clone(File *file) {
+    int i;
+    File *cl;
+
+    cl = File_new();
+
+    cl->id = file->id;
+
+    cl->rel_path = strdup_(file->rel_path);
+    if (cl->rel_path == NULL) {
+        handle_fatal_error(E_ALLOC);
+    }
+
+    cl->tpathes = malloc(file->tps_count * sizeof(TagPath *));
+    if (cl->tpathes == NULL) {
+        handle_fatal_error(E_ALLOC);
+    }
+
+    for (i = 0; i < file->tps_count; i++) {
+        cl->tpathes[i] = TagPath_clone(file->tpathes[i]);
+    }
+
+    cl->tps_count = file->tps_count;
+
+    return cl;
 }
 
 int File_equals(File *f1, File *f2) {

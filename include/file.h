@@ -78,6 +78,14 @@ File *File_build(int id, TagPath **tps, int tps_count, char *path);
 void File_destroy(File *file);
 
 /**
+ * Создает полную копию файла
+ *
+ * @param Исходный файл.
+ * @return Копия исходного файла.
+ */
+File *File_clone(File *file);
+
+/**
  * Сравнивает два файла по значению.
  *
  * @param f1 Первый файл.

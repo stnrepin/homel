@@ -2,6 +2,7 @@
 #define UTILS_H_
 
 #include <stdio.h>
+#include <wchar.h>
 
 /**
  * Обертка над read_line(FILE *f) для чтения из stdin.
@@ -17,5 +18,13 @@ wchar_t *read_line();
  * @return wchar_t* Строка.
  */
 wchar_t *read_line(FILE *f);
+
+/**
+ * Создает копию строки
+ *
+ * @param str Строка.
+ * @return Копия строки.
+ */
+char *strdup_(char *str);
 
 #endif /* !UTILS_H_ */
