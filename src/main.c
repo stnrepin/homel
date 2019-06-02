@@ -20,7 +20,7 @@ int main(int argc, char **argv) {
 
     main_menu = build_main_menu();
 
-    files = load_files(&err);
+    files = load_files_from_db(&err);
 
     if (FAIL(err)) {
         handle_fatal_error(err);
@@ -35,13 +35,17 @@ int main(int argc, char **argv) {
         }
     }
 
+    close_db();
+    FileList_destroy(files);
+
     return EXIT_SUCCESS;
 }
 
 FileList *load_files_from_db(error_t *err) {
     FileList *files;
 
-    files = FileList_new();
+    load_db(err);
+    files = load_files();
 
     return files;
 }

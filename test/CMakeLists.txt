@@ -11,9 +11,10 @@ target_include_directories(homel_test_lib
     PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}
 )
-target_link_libraries(homel_test_lib unity)
+target_link_libraries(homel_test_lib sqlite3 unity)
 
 add_subdirectory("file")
 add_subdirectory("menu")
 add_subdirectory("file-list")
+add_subdirectory("db-controller")
 

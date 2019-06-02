@@ -12,6 +12,9 @@ FileListItem *FileListItem_new() {
         handle_fatal_error(E_ALLOC);
     }
 
+    item->file = NULL;
+    item->next = NULL;
+
     return item;
 }
 
@@ -26,6 +29,7 @@ FileList *FileList_new() {
     if (list == NULL) {
         handle_fatal_error(E_ALLOC);
     }
+	list->first = NULL;
     list->count = 0;
 
     return list;
@@ -72,3 +76,25 @@ FileList *FileList_from_array(File **files, int count) {
     return list;
 }
 
+void FileList_add(FileList *list, File *file) {
+    FileListItem *cur, *new;
+
+    new = FileListItem_new();
+    new->file = file;
+
+    cur = list->first;
+    if (cur == NULL) {
+        list->first = new;
+        list->count = 1;
+    }
+    else {
+        while (cur != NULL) {
+            if (cur->next == NULL) {
+                cur->next = new;
+                cur = cur->next;
+                list->count++;
+            }
+            cur = cur->next;
+        }
+    }
+}

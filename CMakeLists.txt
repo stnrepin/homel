@@ -20,6 +20,11 @@ if(BUILD_TEST)
     enable_testing()
 
     add_subdirectory("external/Unity")
+
+    if(WIN32)
+        target_compile_definitions(unity PRIVATE UNITY_WEAK_ATTRIBUTE= UNITY_INCLUDE_SETUP_STUBS=)
+    endif()
+
     add_subdirectory("test")
 endif()
 

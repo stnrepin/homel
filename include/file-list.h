@@ -56,5 +56,13 @@ void FileList_destroy(FileList *list);
  */
 FileList *FileList_from_array(File **files, int count);
 
+/**
+ * Добавляет новый элемент в список.
+ *
+ * @param list Список.
+ * @param file Новый элемент.
+ */
+void FileList_add(FileList *list, File *file);
+
 #endif /* !FILE_LIST_H_ */
 

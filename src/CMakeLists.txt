@@ -12,10 +12,9 @@ add_library(homel_lib STATIC ${source_files})
 target_include_directories(homel_lib
     PUBLIC
     "${CMAKE_CURRENT_LIST_DIR}/../include"
-    PRIVATE
-    "${CMAKE_CURRENT_SOURCE_DIR}/sqlite3"
 )
+target_link_libraries(homel_lib sqlite3)
 
 add_executable(homel "main.c")
-target_link_libraries(homel homel_lib sqlite3)
+target_link_libraries(homel homel_lib)
 

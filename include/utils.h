@@ -27,4 +27,32 @@ wchar_t *read_line(FILE *f);
  */
 char *strdup_(char *str);
 
+/**
+ * "Отрезает" от строки подстроку, заканчивающуюся на delim (не включается)
+ * и возвращает эту подстроку.
+ *
+ * @param stringp Строка.
+ * @param delim Разделитель.
+ * @return Подстрока.
+ */
+char *strsep_(char **stringp, const char *delim);
+
+/**
+ * Возвращает количество вхождений символа в строке.
+ *
+ * @param str Строка.
+ * @param sym Символ.
+ * @return Количество вхождений.
+ */
+int strcnt_(char *str, const char sym);
+
+/**
+ * Повторяет строку times раз.
+ *
+ * @param str Строка.
+ * @param times Количество раз.
+ * @return Строка, состаящая из times строк str.
+ */
+char* str_repeat(char* str, size_t times);
+
 #endif /* !UTILS_H_ */
