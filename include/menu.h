@@ -90,7 +90,7 @@ Menu *Menu_build(char *caption, MenuItem *items, int count);
  *
  * @param menu Меню.
  */
-void Menu_ui_draw(Menu *menu);
+void Menu_draw(Menu *menu);
 
 /**
  * Спрашивает у пользователя о том, какой пункт требуется выполнить и вызывает
@@ -100,7 +100,7 @@ void Menu_ui_draw(Menu *menu);
  * @param obj Объект, который будет передан в action.
  * @return error_t Возвращает 0 при удаче, иначе - код ошибки.
  */
-error_t Menu_ui_run(Menu *menu, MenuGlobalObject *obj);
+error_t Menu_run(Menu *menu, MenuGlobalObject *obj);
 
 #endif /* !MENU_H_ */
 

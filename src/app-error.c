@@ -17,6 +17,12 @@ char *get_message_by_code(error_t err) {
         case E_ALLOC:
             return "can't alloc memory";
 
+        case E_SYSTEMEXIT:
+            return "system exit";
+
+        case E_INTERNAL:
+            return "internal";
+
         default:
             return "unknown";
     }
