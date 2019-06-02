@@ -2,6 +2,14 @@ cmake_minimum_required(VERSION 3.10)
 
 project(homel LANGUAGES C)
 
+# Build internal SQLite.
+#
+add_subdirectory(external/sqlite3)
+
+if (BUILD_TEST)
+    add_definitions(-DUNIT_TEST=1)
+endif()
+
 add_subdirectory("src")
 set_target_properties(homel
     PROPERTIES
