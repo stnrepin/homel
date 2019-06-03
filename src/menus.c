@@ -11,7 +11,6 @@
     MENU_ITEM("Print", print_all_files_action), \
     MENU_ITEM("Find", open_find_menu_action), \
     MENU_ITEM("Clear screen", clear_screen_action), \
-    MENU_ITEM("Help", help_action), \
     MENU_ITEM("Quit", quit_action) \
 }
 MENU_BUILDER(main, MAIN_MENU_ITEMS)

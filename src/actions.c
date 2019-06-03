@@ -8,21 +8,22 @@
 #include "app-error.h"
 #include "file-list.h"
 #include "utils.h"
+#include "db-controller.h"
 
 /*
  * MAIN MENU
  */
 
-error_t help_action(FileList *files, int act_index) {
-    return SUCCESS;
-}
-
-error_t load_db_action(FileList *files, int act_index) {
-    return SUCCESS;
-}
-
 error_t save_db_action(FileList *files, int act_index) {
-    return SUCCESS;
+    error_t err;
+
+    save_files(files, &err);
+
+    if (SUCC(err)) {
+        printf("Files were successfully saved\n\n");
+    }
+
+    return err;
 }
 
 error_t add_file_action(FileList *files, int act_index) {

@@ -204,9 +204,9 @@ char *tpathes_to_str(TagPath **tps, int count) {
     for (i = 0; i < count; i++) {
         for (j = 0; j < tps[i]->count; j++) {
             tps_str_len += strlen(tps[i]->tags[j]);
-            tps_str_len += 1; /* Symbol ';'. */
+            tps_str_len += 1; /* Symbol '/'. */
         }
-        tps_str_len += 1; /* Symbols '/' and '\0'. */
+        tps_str_len += 1; /* Symbols ';' and '\0'. */
     }
 
     tps_str = malloc(tps_str_len * sizeof(char));
@@ -219,12 +219,12 @@ char *tpathes_to_str(TagPath **tps, int count) {
         for (j = 0; j < tps[i]->count; j++) {
             strcat(tps_str, tps[i]->tags[j]);
             if (j != tps[i]->count - 1) {
-                strcat(tps_str, ";");
+                strcat(tps_str, "/");
             }
         }
 
         if (i != count - 1) {
-            strcat(tps_str, "/");
+            strcat(tps_str, ";");
         }
     }
 

@@ -8,10 +8,6 @@
  * MAIN MENU
  */
 
-error_t help_action(FileList *files, int act_index);
-
-error_t quit_action(FileList *files, int act_index);
-
 error_t save_db_action(FileList *files, int act_index);
 
 error_t add_file_action(FileList *files, int act_index);
