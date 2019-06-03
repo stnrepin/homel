@@ -15,7 +15,7 @@ typedef struct {
  * Объект, хранящий информацию о файле в библиотеке.
  */
 typedef struct {
-    size_t id;
+    int id;
     TagPath **tpathes;
     int tps_count;
     char *rel_path;
@@ -51,6 +51,14 @@ void TagPath_destroy(TagPath *tp);
  * @return TagPath Копия.
  */
 TagPath *TagPath_clone(TagPath *tp);
+
+/**
+ * Возвращае строковое представление TagPath.
+ *
+ * @param tpath TagPath.
+ * @return Строковое представление tpath.
+ */
+char *TagPath_to_str(TagPath *tpath);
 
 /**
  * Создает новый пустой объект File.

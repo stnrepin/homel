@@ -76,3 +76,10 @@ char* str_repeat(char* str, size_t times) {
     return ret;
 }
 
+void str_trunc(char *str, int max_len) {
+    if ((int)strlen(str) > max_len) {
+        str[max_len] = '~';
+        str[max_len+1] = '\0';
+    }
+}
+

@@ -78,6 +78,33 @@ TagPath *TagPath_clone(TagPath *tp) {
     return clone;
 }
 
+char *TagPath_to_str(TagPath *tp) {
+    int i;
+    size_t tp_str_len;
+    char *tp_str;
+
+    tp_str_len = 0;
+    for (i = 0; i < tp->count; i++) {
+        tp_str_len += strlen(tp->tags[i]);
+        tp_str_len += 1; /* Symbol '/' or '\0' */
+    }
+
+    tp_str = malloc(tp_str_len * sizeof(char));
+    if (tp_str == NULL) {
+        handle_fatal_error(E_ALLOC);
+    }
+
+    tp_str[0] = '\0';
+    for (i = 0; i < tp->count; i++) {
+        strcat(tp_str, tp->tags[i]);
+        if (i != tp->count - 1) {
+            strcat(tp_str, "/");
+        }
+    }
+
+    return tp_str;
+}
+
 File *File_new() {
     File *f;
 

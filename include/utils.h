@@ -51,8 +51,18 @@ int strcnt_(char *str, const char sym);
  *
  * @param str Строка.
  * @param times Количество раз.
- * @return Строка, состаящая из times строк str.
+ * @return Строка, состоящая из times строк str.
  */
 char* str_repeat(char* str, size_t times);
 
+/**
+ * Ограничивает длину строки.
+ * Строка будет не длиннее max_str.
+ *
+ * @param str Строка.
+ * @param max_size Максимальный размер строки.
+ */
+void str_trunc(char *str, int max_len);
+
 #endif /* !UTILS_H_ */
+
