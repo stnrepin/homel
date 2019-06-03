@@ -125,10 +125,9 @@ FileList *load_files() {
 }
 
 TagPath **get_tpathes_from_str(char *str, int *count) {
-    char *tpath_str, **tpath_parts, *t_str;
-    TagPath *tpath, **tpathes;
-
-    int tpathes_count, tpath_count, i;
+    char *tpath_str;
+    TagPath **tpathes;
+    int tpathes_count;
 
     *count = 0;
 
@@ -141,23 +140,8 @@ TagPath **get_tpathes_from_str(char *str, int *count) {
 
     while (str != NULL) {
         tpath_str = strsep_(&str, ";");
-        tpath_count = strcnt_(tpath_str, '/') + 1;
-
-        tpath_parts = malloc(tpath_count * sizeof(char*));
-        if (tpath_parts == NULL) {
-            handle_fatal_error(E_ALLOC);
-        }
-
-        i = 0;
-        while ((t_str = strsep_(&tpath_str, "/")) != NULL) {
-            tpath_parts[i++] = t_str;
-        }
-
-        tpath = TagPath_build(tpath_parts, tpath_count);
-        tpathes[*count] = tpath;
+        tpathes[*count] = TagPath_from_str(tpath_str);
         (*count)++;
-
-        free(tpath_parts);
     }
 
     return tpathes;

@@ -4,20 +4,24 @@
 #include <stdio.h>
 #include <wchar.h>
 
+#include "app-error.h"
+
 /**
  * Обертка над read_line(FILE *f) для чтения из stdin.
- * 
- * @return wchar_t* Строка.
+ *
+ * @param len Длина строки.
+ * @return Строка.
  */
-wchar_t *read_line();
+char *read_line(int *len);
 
 /**
  * Читает строку произвольного размера из файла.
- * 
+ *
  * @param f Файл.
- * @return wchar_t* Строка.
+ * @param str_len Размер прочитанной строки.
+ * @return Строка.
  */
-wchar_t *read_line(FILE *f);
+char *file_read_line(FILE *f, int *str_len);
 
 /**
  * Создает копию строки
@@ -63,6 +67,23 @@ char* str_repeat(char* str, size_t times);
  * @param max_size Максимальный размер строки.
  */
 void str_trunc(char *str, int max_len);
+
+/**
+ * Проверяет строку на отсутствие запрещенных символов.
+ *
+ * @param str Строка.
+ * @param whitelist Разрешенные символы.
+ * @return Ошибку, если строка не прошла проверку, или 0.
+ */
+error_t str_validate(char *str, char *whilelist);
+
+/**
+ * Показывает, является ли симпол допустимым в пути.
+ *
+ * @param c
+ * @return Допустим или нет.
+ */
+int char_is_valid(char c);
 
 #endif /* !UTILS_H_ */
 

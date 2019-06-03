@@ -26,7 +26,18 @@ error_t save_db_action(FileList *files, int act_index) {
 }
 
 error_t add_file_action(FileList *files, int act_index) {
-    return SUCCESS;
+    error_t err;
+    File *f;
+
+    f = read_file_from_stdin(&err);
+
+    if (SUCC(err)) {
+        f->id = get_last_id(files) + 1;
+
+        FileList_add(files, f);
+    }
+
+    return err;
 }
 
 error_t delete_file_action(FileList *files, int act_index) {
@@ -163,4 +174,62 @@ void print_file(File* f) {
         print_row("", tpath_str, "");
         free(tpath_str);
     }
+}
+
+File *read_file_from_stdin(error_t *err) {
+    File *f;
+    int tps_count, t;
+    char *tpath, *path;
+    TagPath **tpathes;
+
+    *err = SUCCESS;
+    f = NULL;
+
+    tpathes = malloc(READ_TPATHES_MAX_COUNT * sizeof(TagPath *));
+    if (tpathes == NULL) {
+        handle_fatal_error(E_ALLOC);
+    }
+
+    printf("Enter tpathes (enter empty string to finish input):\n");
+    tps_count = 0;
+    tpath = read_line(&t);
+    while (t > 0 && SUCC(*err)) {
+        if (tps_count > READ_TPATHES_MAX_COUNT) {
+            *err = E_LIMIT_EXCEEDED;
+        }
+        else {
+            *err = str_validate(tpath, "");
+            tpathes[tps_count] = TagPath_from_str(tpath);
+            tps_count++;
+        }
+        tpath = read_line(&t);
+    }
+
+    if (SUCC(*err)) {
+        printf("Enter path: ");
+        path = read_line(&t);
+
+        *err = str_validate(path, "");
+        if (SUCC(*err)) {
+            f = File_build(-1, tpathes, tps_count, path);
+        }
+    }
+
+    return f;
+}
+
+int get_last_id(FileList *fs) {
+    int id;
+    FileListItem *cur;
+
+    id = -1;
+    cur = fs->first;
+    while (cur != NULL) {
+        if (cur->next == NULL) {
+            id = cur->file->id;
+        }
+        cur = cur->next;
+    }
+
+    return id;
 }

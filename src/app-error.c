@@ -35,6 +35,12 @@ char *get_message_by_code(error_t err) {
         case E_DB_STMT_EVAL:
             return "db statement couldn't be evaluated";
 
+        case E_LIMIT_EXCEEDED:
+            return "limit exceeded";
+
+        case E_INVALID_STR:
+            return "string contains invalid symbols";
+
         default:
             return "unknown";
     }

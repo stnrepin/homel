@@ -105,6 +105,31 @@ char *TagPath_to_str(TagPath *tp) {
     return tp_str;
 }
 
+TagPath *TagPath_from_str(char *str) {
+    TagPath *tpath;
+    char *tpath_str, **tpath_parts, *t_str;
+    int tpath_count, i;
+
+    tpath_count = strcnt_(str, '/') + 1;
+
+    tpath_parts = malloc(tpath_count * sizeof(char*));
+    if (tpath_parts == NULL) {
+        handle_fatal_error(E_ALLOC);
+    }
+
+    i = 0;
+    tpath_str = str;
+    while ((t_str = strsep_(&tpath_str, "/")) != NULL) {
+        tpath_parts[i++] = t_str;
+    }
+
+    tpath = TagPath_build(tpath_parts, tpath_count);
+
+    free(tpath_parts);
+
+    return tpath;
+}
+
 File *File_new() {
     File *f;
 

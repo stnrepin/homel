@@ -61,6 +61,15 @@ TagPath *TagPath_clone(TagPath *tp);
 char *TagPath_to_str(TagPath *tpath);
 
 /**
+ * Парсит TagPath из строки.
+ *
+ * @param str Строка.
+ * @param err Ошибка.
+ * @return Новый объект TagPath.
+ */
+TagPath *TagPath_from_str(char *str);
+
+/**
  * Создает новый пустой объект File.
  *
  * @return File Новый объект.

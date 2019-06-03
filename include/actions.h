@@ -68,5 +68,20 @@ void print_hline();
  */
 void print_file(File *f);
 
+/**
+ * Читает с файл из stdin.
+ *
+ * @param err Ошибка.
+ */
+File *read_file_from_stdin(error_t *err);
+
+/**
+ * Возвращает ID последнего файла в списке (или -1, если файлов нет).
+ *
+ * @param fs Список файлов.
+ * @return ID последнего файла.
+ */
+int get_last_id(FileList *fs);
+
 #endif /* !ACTIONS_H_ */
 
