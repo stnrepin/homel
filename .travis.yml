@@ -26,7 +26,7 @@ matrix:
 install:
     - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
     - mkdir -p ${DEPS_DIR} && cd ${DEPS_DIR}
-    - source "${TRAVIS_BUILD_DIR}/ci/travis/install-${TRAVIS_OS_NAME}.sh"
+    - source "${TRAVIS_BUILD_DIR}/scripts/ci/travis/install-${TRAVIS_OS_NAME}.sh"
     - cd "${TRAVIS_BUILD_DIR}"
 
 script:
