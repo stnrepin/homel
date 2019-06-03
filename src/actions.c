@@ -35,6 +35,8 @@ error_t add_file_action(FileList *files, int act_index) {
         f->id = get_last_id(files) + 1;
 
         FileList_add(files, f);
+
+        printf("File was successfully added\n\n");
     }
 
     return err;
@@ -208,6 +210,7 @@ File *read_file_from_stdin(error_t *err) {
     if (SUCC(*err)) {
         printf("Enter path: ");
         path = read_line(&t);
+        puts("");
 
         *err = str_validate(path, "");
         if (SUCC(*err)) {

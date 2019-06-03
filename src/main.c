@@ -32,6 +32,7 @@ int main(int argc, char **argv) {
 
         if (FAIL(err) && err != E_SYSTEMEXIT) {
             handle_error(err);
+            puts("");
         }
     }
 

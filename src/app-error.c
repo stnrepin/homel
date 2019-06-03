@@ -39,7 +39,7 @@ char *get_message_by_code(error_t err) {
             return "limit exceeded";
 
         case E_INVALID_STR:
-            return "string contains invalid symbols";
+            return "string is invalid";
 
         default:
             return "unknown";
