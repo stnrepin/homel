@@ -331,18 +331,21 @@ int read_id(error_t *err) {
 
 File *edit_file(File *file, error_t *err) {
     File *f;
-    int i, new_tp_str_len;
-    char *tpath_str, *new_tpath_str;
+    int i, len;
+    char *tpath_str, *new_tpath_str, *new_path;
 
     *err = SUCCESS;
     f = File_clone(file);
 
     for (i = 0; i < f->tps_count && SUCC(*err); i++) {
         tpath_str = TagPath_to_str(f->tpathes[i]);
-        printf("Enter new tpath #%d (default - %s): ", i+1, tpath_str);
-        new_tpath_str = read_line(&new_tp_str_len);
 
-        if (new_tp_str_len > 0) {
+        printf("Enter new tpath #%d (default - %s): ", i+1, tpath_str);
+        new_tpath_str = read_line(&len);
+
+        free(tpath_str);
+
+        if (len > 0) {
             *err = str_validate(new_tpath_str, "");
             if (SUCC(*err)) {
                 f->tpathes[i] = TagPath_from_str(new_tpath_str);
@@ -350,6 +353,22 @@ File *edit_file(File *file, error_t *err) {
         }
 
         free(new_tpath_str);
+    }
+
+
+    printf("Enter new file path (default - %s): ", f->rel_path);
+    new_path = read_line(&len);
+
+
+    if (len > 0) {
+        *err = str_validate(new_path, "");
+        if (SUCC(*err)) {
+            free(f->rel_path);
+            f->rel_path = new_path;
+        }
+        else {
+            free(new_path);
+        }
     }
 
     return f;
