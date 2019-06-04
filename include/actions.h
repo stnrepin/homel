@@ -79,5 +79,13 @@ File *read_file_from_stdin(error_t *err);
  */
 int get_last_id(FileList *fs);
 
+/**
+ * Спрашивает у пользователя ID требуемого файла.
+ *
+ * @param err Ошибка.
+ * @return ID файла.
+ */
+int read_id(error_t *err);
+
 #endif /* !ACTIONS_H_ */
 

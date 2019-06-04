@@ -44,7 +44,45 @@ error_t add_file_action(FileList *files, int act_index) {
 }
 
 error_t delete_file_action(FileList *files, int act_index) {
-    return SUCCESS;
+    error_t err;
+    int id, found;
+    FileListItem *cur, *prev;
+
+    found = 0;
+    id = read_id(&err);
+
+    if (SUCC(err)) {
+        prev = NULL;
+        cur = files->first;
+        while (!found && cur != NULL) {
+            if (cur->file->id == id) {
+                if (prev == NULL) {
+                    files->first = NULL;
+                }
+                else {
+                    prev->next = cur->next;
+                }
+                File_destroy(cur->file);
+                FileListItem_destroy(cur);
+
+                files->count--;
+                found = 1;
+            }
+            prev = cur;
+            cur = cur->next;
+        }
+
+        if (!found) {
+            printf("File with ID %d not found.\n", id);
+        }
+        else {
+            printf("File with ID %d successfully removed\n", id);
+        }
+    }
+
+    puts("");
+
+    return err;
 }
 
 error_t edit_file_action(FileList *files, int act_index) {
@@ -69,9 +107,9 @@ error_t print_all_files_action(FileList *files, int act_index) {
 
             cur = cur->next;
         }
+    }
 
         puts("");
-    }
 
     return SUCCESS;
 }
@@ -237,3 +275,17 @@ int get_last_id(FileList *fs) {
 
     return id;
 }
+
+int read_id(error_t *err) {
+    int id;
+
+    *err = SUCCESS;
+
+    printf("Enter ID: ");
+    if(scanf("%10d", &id) != 1) {
+        *err = E_INVALID_STR;
+    }
+
+    return id;
+}
+
