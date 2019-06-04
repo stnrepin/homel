@@ -9,6 +9,8 @@
 #include "file-list.h"
 #include "utils.h"
 #include "db-controller.h"
+#include "menu.h"
+#include "menus.h"
 
 /*
  * MAIN MENU
@@ -146,12 +148,23 @@ error_t print_all_files_action(FileList *files, int act_index) {
         }
     }
 
-        puts("");
+    puts("");
 
     return SUCCESS;
 }
 
 error_t open_find_menu_action(FileList *files, int act_index) {
+    error_t err;
+    Menu *find_menu;
+
+    err = SUCCESS;
+    find_menu = build_find_menu();
+
+    if (SUCC(err)) {
+        Menu_draw(find_menu);
+        err = Menu_run(find_menu, files);
+    }
+
     return SUCCESS;
 }
 
@@ -169,15 +182,96 @@ error_t quit_action(FileList *files, int act_index) {
  */
 
 error_t find_file_by_id_action(FileList *files, int act_index) {
-    return SUCCESS;
+    error_t err;
+    FileList *found;
+    FileListItem *cur;
+    int id;
+
+    found = FileList_new();
+
+    printf("Enter path to search: ");
+    id = read_id(&err);
+
+    cur = files->first;
+    while (cur != NULL) {
+        if (cur->file->id == id) {
+            FileList_add(found, cur->file);
+        }
+
+        cur = cur->next;
+    }
+
+    print_all_files_action(found, -1);
+
+    FileList_destroy(found);
+
+    return err;
 }
 
 error_t find_file_by_tag_action(FileList *files, int act_index) {
-    return SUCCESS;
+    error_t err;
+    int t, i, was_found;
+    FileList *found;
+    FileListItem *cur;
+    char *tpath, *tpath_str;
+
+    err = SUCCESS;
+    found = FileList_new();
+
+    printf("Enter tpath to search: ");
+    tpath = read_line(&t);
+
+    cur = files->first;
+    while (cur != NULL) {
+        was_found = 0;
+        for (i = 0; i < cur->file->tps_count && !was_found; i++) {
+            tpath_str = TagPath_to_str(cur->file->tpathes[i]);
+            if (strcmp(tpath_str, tpath) == 0) {
+                FileList_add(found, cur->file);
+                was_found = 1;
+            }
+            free(tpath_str);
+        }
+
+        cur = cur->next;
+    }
+
+    print_all_files_action(found, -1);
+
+    FileList_destroy(found);
+    free(tpath);
+
+    return err;
 }
 
 error_t find_file_by_path_action(FileList *files, int act_index) {
-    return SUCCESS;
+    error_t err;
+    int t;
+    FileList *found;
+    FileListItem *cur;
+    char *path;
+
+    err = SUCCESS;
+    found = FileList_new();
+
+    printf("Enter path to search: ");
+    path = read_line(&t);
+
+    cur = files->first;
+    while (cur != NULL) {
+        if (strcmp(cur->file->rel_path, path) == 0) {
+            FileList_add(found, cur->file);
+        }
+
+        cur = cur->next;
+    }
+
+    print_all_files_action(found, -1);
+
+    FileList_destroy(found);
+    free(path);
+
+    return err;
 }
 
 /*
@@ -373,3 +467,4 @@ File *edit_file(File *file, error_t *err) {
 
     return f;
 }
+

@@ -25,7 +25,7 @@ Menu *build_main_menu();
  *
  * @return Menu* Меню поиска.
  */
-Menu *build_search_menu();
+Menu *build_find_menu();
 
 /**
  * Создает меню просмотра (сортировки).
