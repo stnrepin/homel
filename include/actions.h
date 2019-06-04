@@ -87,5 +87,13 @@ int get_last_id(FileList *fs);
  */
 int read_id(error_t *err);
 
+/**
+ * Редактирует файл.
+ *
+ * @param f Файл.
+ * @return Измененный файл.
+ */
+File *edit_file(File *file, error_t *err);
+
 #endif /* !ACTIONS_H_ */
 

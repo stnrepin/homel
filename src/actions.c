@@ -86,7 +86,42 @@ error_t delete_file_action(FileList *files, int act_index) {
 }
 
 error_t edit_file_action(FileList *files, int act_index) {
-    return SUCCESS;
+    error_t err;
+    File *new_f;
+    int id, found;
+    FileListItem *cur;
+
+    found = 0;
+    id = read_id(&err);
+
+    if (SUCC(err)) {
+        cur = files->first;
+        while (!found && SUCC(err) && cur != NULL) {
+            if (cur->file->id == id) {
+                new_f = edit_file(cur->file, &err);
+                found = 1;
+                if (SUCC(err)) {
+                    File_destroy(cur->file);
+                    cur->file = new_f;
+                }
+                else {
+                    File_destroy(new_f);
+                }
+            }
+            cur = cur->next;
+        }
+    }
+
+    if (SUCC(err)) {
+        if (!found) {
+            printf("File with ID %d not found.\n", id);
+        }
+        else {
+            printf("File with ID %d successfully edited\n", id);
+        }
+    }
+
+    return err;
 }
 
 error_t print_all_files_action(FileList *files, int act_index) {
@@ -96,6 +131,8 @@ error_t print_all_files_action(FileList *files, int act_index) {
         printf("There are no files.\n");
     }
     else {
+        printf("Count of files: %d\n\n", (int)files->count);
+
         print_table_header();
 
         cur = files->first;
@@ -277,7 +314,7 @@ int get_last_id(FileList *fs) {
 }
 
 int read_id(error_t *err) {
-    int id;
+    int id, c;
 
     *err = SUCCESS;
 
@@ -286,6 +323,34 @@ int read_id(error_t *err) {
         *err = E_INVALID_STR;
     }
 
+    /* Очищаем буфер ввода, оставшийся после выполнения scanf. */
+    while ((c = getchar()) != '\n' && c != EOF) { }
+
     return id;
 }
 
+File *edit_file(File *file, error_t *err) {
+    File *f;
+    int i, new_tp_str_len;
+    char *tpath_str, *new_tpath_str;
+
+    *err = SUCCESS;
+    f = File_clone(file);
+
+    for (i = 0; i < f->tps_count && SUCC(*err); i++) {
+        tpath_str = TagPath_to_str(f->tpathes[i]);
+        printf("Enter new tpath #%d (default - %s): ", i+1, tpath_str);
+        new_tpath_str = read_line(&new_tp_str_len);
+
+        if (new_tp_str_len > 0) {
+            *err = str_validate(new_tpath_str, "");
+            if (SUCC(*err)) {
+                f->tpathes[i] = TagPath_from_str(new_tpath_str);
+            }
+        }
+
+        free(new_tpath_str);
+    }
+
+    return f;
+}
