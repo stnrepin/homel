@@ -57,7 +57,7 @@ error_t delete_file_action(FileList *files, int act_index) {
         while (!found && cur != NULL) {
             if (cur->file->id == id) {
                 if (prev == NULL) {
-                    files->first = NULL;
+                    files->first = cur->next;
                 }
                 else {
                     prev->next = cur->next;
