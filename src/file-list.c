@@ -98,3 +98,27 @@ void FileList_add(FileList *list, File *file) {
         }
     }
 }
+
+File **FileList_to_array(FileList *list) {
+    File **arr;
+    FileListItem *cur;
+    int i;
+
+    arr = NULL;
+    if (list->count > 0) {
+        arr = malloc(list->count * sizeof(File *));
+        if (arr == NULL) {
+            handle_fatal_error(E_ALLOC);
+        }
+
+        i = 0;
+        cur = list->first;
+        while (cur != NULL) {
+            arr[i] = File_clone(cur->file);
+            i++;
+            cur = cur->next;
+        }
+    }
+
+    return arr;
+}

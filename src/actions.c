@@ -165,7 +165,22 @@ error_t open_find_menu_action(FileList *files, int act_index) {
         err = Menu_run(find_menu, files);
     }
 
-    return SUCCESS;
+    return err;
+}
+
+error_t open_sort_menu_action(FileList *files, int act_index) {
+    error_t err;
+    Menu *sort_menu;
+
+    err = SUCCESS;
+    sort_menu = build_sort_menu();
+
+    if (SUCC(err)) {
+        Menu_draw(sort_menu);
+        err = Menu_run(sort_menu, files);
+    }
+
+    return err;
 }
 
 error_t clear_screen_action(FileList *files, int act_index) {
@@ -272,6 +287,63 @@ error_t find_file_by_path_action(FileList *files, int act_index) {
     free(path);
 
     return err;
+}
+
+/*
+ * SORT MENU
+ */
+
+error_t sort_files_by_id_action(FileList *files, int act_index) {
+    int i;
+    File **arr;
+    FileList *sorted;
+
+    if (files->count == 0) {
+        printf("There are no files.\n");
+    }
+    else {
+        arr = FileList_to_array(files);
+
+        qsort(arr, files->count, sizeof(File *), (int(*) (const void *, const void *))file_by_id_comparer);
+
+        sorted = FileList_from_array(arr, files->count);
+        print_all_files_action(sorted, -1);
+
+        FileList_destroy(sorted);
+
+        for (i = 0; i < files->count; i++) {
+            File_destroy(arr[i]);
+        }
+        free(arr);
+    }
+
+    return SUCCESS;
+}
+
+error_t sort_files_by_path_action(FileList *files, int act_index) {
+    int i;
+    File **arr;
+    FileList *sorted;
+
+    if (files->count == 0) {
+        printf("There are no files.\n");
+    } else {
+        arr = FileList_to_array(files);
+
+        qsort(arr, files->count, sizeof(File *), (int (*)(const void *, const void *)) file_by_path_comparer);
+
+        sorted = FileList_from_array(arr, files->count);
+        print_all_files_action(sorted, -1);
+
+        FileList_destroy(sorted);
+
+        for (i = 0; i < files->count; i++) {
+            File_destroy(arr[i]);
+        }
+        free(arr);
+    }
+
+    return SUCCESS;
 }
 
 /*
@@ -468,3 +540,10 @@ File *edit_file(File *file, error_t *err) {
     return f;
 }
 
+int file_by_id_comparer(File **f1, File **f2) {
+    return (*f1)->id - (*f2)->id;
+}
+
+int file_by_path_comparer(File **f1, File **f2) {
+    return strcmp((*f1)->rel_path, (*f2)->rel_path);
+}

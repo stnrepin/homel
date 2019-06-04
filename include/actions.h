@@ -20,6 +20,8 @@ error_t print_all_files_action(FileList *files, int act_index);
 
 error_t open_find_menu_action(FileList *files, int act_index);
 
+error_t open_sort_menu_action(FileList *files, int act_index);
+
 error_t clear_screen_action(FileList *files, int act_index);
 
 error_t quit_action(FileList *files, int act_index);
@@ -33,6 +35,14 @@ error_t find_file_by_id_action(FileList *files, int act_index);
 error_t find_file_by_tag_action(FileList *files, int act_index);
 
 error_t find_file_by_path_action(FileList *files, int act_index);
+
+/*
+ * SORT MENU
+ */
+
+error_t sort_files_by_id_action(FileList *files, int act_index);
+
+error_t sort_files_by_path_action(FileList *files, int act_index);
 
 /*
  * HELPERS
@@ -94,6 +104,10 @@ int read_id(error_t *err);
  * @return Измененный файл.
  */
 File *edit_file(File *file, error_t *err);
+
+int file_by_id_comparer(File **f1, File **f2);
+
+int file_by_path_comparer(File **f1, File **f2);
 
 #endif /* !ACTIONS_H_ */
 

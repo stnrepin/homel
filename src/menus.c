@@ -9,6 +9,7 @@
     MENU_ITEM("Edit", edit_file_action), \
     MENU_ITEM("Delete", delete_file_action), \
     MENU_ITEM("Print", print_all_files_action), \
+    MENU_ITEM("Sort", open_sort_menu_action), \
     MENU_ITEM("Find", open_find_menu_action), \
     MENU_ITEM("Clear screen", clear_screen_action), \
     MENU_ITEM("Quit", quit_action) \
@@ -21,4 +22,10 @@ MENU_BUILDER(main, MAIN_MENU_ITEMS)
     MENU_ITEM("By file path", find_file_by_path_action), \
 }
 MENU_BUILDER(find, FIND_MENU_ITEMS);
+
+#define SORT_MENU_ITEMS { \
+    MENU_ITEM("By Id", sort_files_by_id_action), \
+    MENU_ITEM("By file path", sort_files_by_path_action), \
+}
+MENU_BUILDER(sort, SORT_MENU_ITEMS);
 

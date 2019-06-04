@@ -28,11 +28,11 @@ Menu *build_main_menu();
 Menu *build_find_menu();
 
 /**
- * Создает меню просмотра (сортировки).
+ * Создает меню сортировки.
  *
- * @return Menu* Меню просмотра.
+ * @return Menu* Меню сортировки.
  */
-Menu *build_view_menu();
+Menu *build_sort_menu();
 
 #endif /* !MENUS_H_ */
 

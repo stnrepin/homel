@@ -64,5 +64,13 @@ FileList *FileList_from_array(File **files, int count);
  */
 void FileList_add(FileList *list, File *file);
 
+/**
+ * Преобразует список в массив.
+ *
+ * @param files Список
+ * @return Массив.
+ */
+File **FileList_to_array(FileList *list);
+
 #endif /* !FILE_LIST_H_ */
 
