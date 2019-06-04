@@ -31,7 +31,7 @@ TagPath *TagPath_build(char **tp_arr, int count) {
     if (count > 0) {
         tp->tags = (char **)malloc(count * sizeof(char*));
         for (i = 0; i < count && !has_error; i++) {
-            tp->tags[i] = malloc(strlen(tp_arr[i]) * sizeof(char));
+            tp->tags[i] = malloc((strlen(tp_arr[i]) + 1) * sizeof(char));
             if (tp->tags[i] == NULL) {
                 has_error = 1;
             }
@@ -118,7 +118,7 @@ TagPath *TagPath_from_str(char *str) {
     }
 
     i = 0;
-    tpath_str = str;
+    tpath_str = strdup_(str);
     while ((t_str = strsep_(&tpath_str, "/")) != NULL) {
         tpath_parts[i++] = t_str;
     }
@@ -152,7 +152,7 @@ File *File_build(int id, TagPath **tps, int tpathes_count, char *path) {
 
     f = File_new();
     f->id = id;
-    f->rel_path = malloc(strlen(path) * sizeof(char));
+    f->rel_path = malloc((strlen(path) + 1) * sizeof(char));
 
     if (f->rel_path == NULL) {
         File_destroy(f);
